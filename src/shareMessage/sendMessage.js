@@ -34,11 +34,11 @@ const sendSignedMessage = async()=>
       body: { hello: 'world' },
     }
 
-    const packedMessage = await localAgent.packDIDCommMessage({
+    const packedMessage = await agent.packDIDCommMessage({
       packing: "none",
       message,
     })
-    const result = await localAgent.sendDIDCommMessage({
+    const result = await agent.sendDIDCommMessage({
       messageId: '123',
       packedMessage,
       recipientDidUrl: recieverDid,
