@@ -29,7 +29,6 @@ const {SdrMessageHandler} = require('@veramo/selective-disclosure');
 require('dotenv').config();
 // Storage plugin using TypeOrm
 const { Entities, KeyStore, DIDStore, IDataStoreORM, PrivateKeyStore, migrations,DataStore,DataStoreORM } = require('@veramo/data-store');
-
 // TypeORM is installed with `@veramo/data-store`
 const { createConnection } =  require('typeorm');
 const {DATABASE_FILE} = require('../config/config');
@@ -42,7 +41,6 @@ const dbConnection = createConnection({
     logging: ['error', 'info', 'warn'],
     entities: Entities,
   })
-
 const agent = createAgent({
     plugins: [
       new KeyManager({
@@ -86,6 +84,11 @@ const agent = createAgent({
         }),
       }),
       new CredentialIssuer(),
+      new AgentRestClient({
+        url: 'http://localhost:' + port + basePath,
+        enabledMethods: localAgent.availableMethods(),
+        schema: localAgent.getSchema(),
+      }),
     ],
   })
   module.exports = {
